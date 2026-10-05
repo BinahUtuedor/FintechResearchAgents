@@ -2,7 +2,7 @@
 
 ## Status and authorisation
 
-FRA-001 is implemented and founder-accepted on 2026-10-01. FRA-002 is implemented and founder-accepted on 2026-10-01: the acceptance covers its recorded inputs and deferrals, not approval of technical proposals or downstream activities. The corrected FRA-003 documentation-only design is implemented, documentation-checked and founder-accepted on 2026-10-04. FRA-004 through FRA-023 remain planned and unauthorised. The founder authorised the first documentation commit on 2026-10-04; Git history establishes inclusion separately from acceptance. Implemented means the scoped artifacts exist; tested means specified checks actually ran with recorded results; committed means a Git commit exists. These are separate from founder acceptance. Documentation checks do not test a running platform.
+FRA-001 is implemented and founder-accepted on 2026-10-01. FRA-002 is implemented and founder-accepted on 2026-10-01: the acceptance covers its recorded inputs and deferrals, not approval of technical proposals or downstream activities. The corrected FRA-003 documentation-only design is implemented, documentation-checked and founder-accepted on 2026-10-04. FRA-004 is implemented, verified and founder-accepted on 2026-10-05; this increment is being recorded in Git under the founder's separate commit authorisation. FRA-005 through FRA-023 remain planned and unauthorised. The founder authorised the first documentation commit on 2026-10-04; Git history establishes inclusion separately from acceptance. Implemented means the scoped artifacts exist; tested means specified checks actually ran with recorded results; committed means a Git commit exists. These are separate from founder acceptance. Documentation checks do not test a running platform. FRA-004 is the limited CLI/configuration validation exception.
 
 Development sequence: **implement -> verify -> review/accept -> commit**. Review findings return to implementation and verification before acceptance. Acceptance and Git commit status remain separate; a commit requires explicit authorisation even after acceptance. Git history can establish which accepted documentation a commit includes; no additional documentation commit is required merely to insert that commit's own hash.
 
@@ -10,21 +10,21 @@ IDs are stable: do not renumber completed or deferred tasks. Dependencies expres
 
 ## Decision register
 
-The founder confirmed a one-developer team and founder-led development assisted by Codex on 2026-10-01. No skills, capacity, additional human reviewers or funding are inferred. The Python-first local CLI, initial SQLite and provider-adapter direction remains the existing founder direction. The implementation details below are proposals, not verified choices or permission to install or build.
+The founder confirmed a one-developer team and founder-led development assisted by Codex on 2026-10-01. No skills, capacity, additional human reviewers or funding are inferred. The Python-first local CLI, initial SQLite and provider-adapter direction remains the existing founder direction. FRA-004 decisions below were explicitly approved for that task; later implementation choices remain proposals.
 
 | Decision | Current position / minimal proposal | Verification and approval point |
 | --- | --- | --- |
-| Runtime and packaging | Python; exact version and packaging tool unselected. Propose one local package and one process | Before FRA-004, verify supported Python versions, local environment and dependency compatibility; founder approves exact choices |
-| CLI and configuration | Propose standard-library argparse and explicit local configuration; add a CLI framework only for a demonstrated need | Review fit in FRA-003; verify version-specific behaviour and approve before FRA-004 |
+| Runtime and packaging | CPython 3.14.7 at `C:\Python314\python.exe`; one package runnable from repository root; no build backend or installation | Approved for FRA-004 by founder on 2026-10-05; verified local interpreter |
+| CLI and configuration | Standard-library argparse and tomllib; exact TOML keys `schema_version = 1` and `mode = "demo"` | Approved and implemented for FRA-004 on 2026-10-05 |
 | Contracts and orchestration | Propose plain typed records, explicit validation and deterministic functions; defer an agent framework or workflow service | FRA-003 documents contracts and state-machine design in architecture.md, founder-accepted on 2026-10-04; no runtime schemas or implementation delivered |
 | Persistence and artifacts | Initial SQLite per founder direction; propose sqlite3 access and local JSON/Markdown artifacts, without an ORM initially | FRA-003 reviews transaction/recovery needs; verify runtime compatibility and approve tooling before FRA-005 |
-| Testing and economics | Propose unittest, controlled fake adapters and decimal-based deterministic calculations; evaluate pytest only if useful | Verify suitability and approve test tooling before FRA-004; define numeric policy in the relevant later task |
+| Testing and economics | Standard-library unittest for FRA-004; later controlled fake adapters and decimal-based deterministic calculations remain proposed | unittest approved for FRA-004 on 2026-10-05; define numeric policy in the relevant later task |
 | AI/search integration | Providers, models, SDKs and pricing unselected. Propose provider-neutral interfaces first, then only the concrete adapters needed for an approved run | Before FRA-007, compare candidate providers against required capabilities, provenance, privacy, errors and cost controls using current primary documentation; obtain founder approval. Successful separately authorised FRA-023 verification precedes FRA-012 |
 | Usage limits and spend authority | Founder explicitly deferred spending limits on 2026-10-01. Propose live access blocked by default; no numeric allowance inferred | Founder approves applicable call/token/spend limits before live activity; paid calls require approved spending limits and explicit authorisation |
 | Fintech opportunity and product stack | No opportunity selected; no product-stack proposal justified yet | Founder selection in FRA-013 after relevant deferrals are resolved; product-specific design in FRA-017 |
 | Dashboard and infrastructure | Propose no dashboard, service deployment, queue or production infrastructure in the initial local platform | Revisit only through later separately scoped and authorised tasks |
 
-These proposals minimise moving parts for a solo developer; they are not claims about current library versions, pricing or provider support. No external technical verification, package installation or live integration ran in FRA-002. Technical names above are candidates to evaluate, not approved dependencies.
+These choices apply only to the FRA-004 scaffold. No third-party dependency, build backend, installation or network access is required or performed. Later technical names remain candidates to evaluate, not approved dependencies.
 
 ## Constraints and stage-specific blockers
 
@@ -76,10 +76,10 @@ Research remains bounded to Nigeria with no preselected concept. Proposed compar
 
 - Purpose: provide the smallest executable platform entry point.
 - Scope: approved Python/tool versions, package structure, CLI help/configuration validation and developer instructions; no live adapter or product functionality.
-- Dependencies: founder review/acceptance of FRA-003 and explicit FRA-004 authorisation; verify local environment and current supported Python/tool compatibility, then obtain founder approval of exact Python version, packaging approach, CLI/configuration and test tooling. Installation requires separate explicit authorisation if needed.
+- Dependencies: founder acceptance of FRA-003, explicit FRA-004 authorisation and approval of the exact local runtime/tool choices (recorded 2026-10-05).
 - Acceptance criteria: CLI runs locally, rejects invalid configuration clearly and never prints secrets; setup instructions match actual behaviour.
-- Verification: CLI help and invalid-config smoke checks in approved environment; record executed checks and limitations.
-- Status: planned; not authorised.
+- Verification: unit and subprocess tests plus documented smoke commands under CPython 3.14.7 with bytecode disabled; see FRA-004 delivery record below.
+- Status: implemented, verified and founder-accepted on 2026-10-05; commit separately authorised.
 
 ### FRA-005 — Evidence persistence
 
@@ -201,7 +201,7 @@ Next proposed task is FRA-004 only after founder acceptance of FRA-003 and expli
 
 Documentation-only correction: [architecture.md](architecture.md) design version 2 defines an independent recovery boundary for missing backup history and unavailable provider receipts; per-dimension accounting and ordered same-attempt reconciliation; immutable evidence with separate decision/review targets; version-pinned criteria and one canonical gap review; and real human offline-demo execution authority distinct from synthetic lifecycle decisions. The specification mirrors these boundaries. Five focused expected-behaviour scenarios extend the original nine; these are design walkthroughs, not executed runtime tests. The development sequence is implement -> verify -> review/accept -> commit, with acceptance independent of Git inclusion and no self-hash documentation commit requirement.
 
-FRA-003 remains implemented as documentation and awaiting founder review. FRA-004 has not started; FRA-004 through FRA-023 remain planned and unauthorised. No application code, dependencies, live calls, staging or commits are part of this correction. Next action is founder review of corrected FRA-003; only then may separately authorised FRA-004 prerequisites proceed.
+**Historical checkpoint — 2026-10-04, before FRA-004 authorisation:** FRA-003 remained implemented as documentation and awaiting founder review. FRA-004 had not started; FRA-004 through FRA-023 were planned and unauthorised at that point. No application code, dependencies, live calls, staging or commits were part of this correction. The next action then was founder review of corrected FRA-003, after which separately authorised FRA-004 prerequisites could proceed.
 
 Correction verification: manually cross-checked all five findings against contracts, persistence relationships, specification and expected scenarios. Automated documentation checks passed for local Markdown links, all 23 unique stable task definitions, 14 scenario rows and absence of obsolete approval/gap-review fields. Tracked/staged whitespace checks and explicit no-index whitespace checks of all seven untracked files passed with CRLF-aware settings. The index is empty and master has no commits. No runtime tests were run; founder review and future implementation verification remain outstanding.
 
@@ -209,4 +209,14 @@ Correction verification: manually cross-checked all five findings against contra
 
 2026-10-04: the founder explicitly accepted the corrected FRA-003 documentation design (architecture design version 2) and authorised recording this acceptance and making the first commit containing only AGENTS.md, README.md, .gitignore, docs/founder-brief.md, docs/product-specification.md, docs/implementation.md and docs/architecture.md after documentation and staged-scope checks pass. Earlier verification records retain their historical status; acceptance does not turn design walkthroughs into executed runtime tests. Git history establishes commit inclusion without a follow-up commit to insert its own hash.
 
-FRA-004 has not started and remains planned and unauthorised. Its next step requires explicit task authorisation, environment/current compatibility verification and founder approval of exact tooling choices; installation needs separate authority. No runtime implementation, live calls or push is authorised by this acceptance.
+**Historical checkpoint — 2026-10-04, after FRA-003 acceptance but before FRA-004 authorisation:** FRA-004 had not started and remained planned and unauthorised. Its next step required explicit task authorisation, environment/current compatibility verification and founder approval of exact tooling choices; installation needed separate authority. No runtime implementation, live calls or push was authorised by this acceptance. Current FRA-004 status is implemented and verified, with founder acceptance recorded below.
+
+## FRA-004 delivery and verification record (2026-10-05)
+
+Implemented the root-runnable `fintech_research_agents` package, strict immutable demo settings loader, `validate-config PATH`, help/version actions, sanitised diagnostics, example TOML, and unittest coverage. Exit code 0 denotes success and 2 invalid command/configuration. No persistence, orchestration, research roles, live adapters, third-party packages, installation or network calls were added.
+
+Verification passed with `C:\Python314\python.exe` and `PYTHONDONTWRITEBYTECODE=1`: all 8 unittest cases passed, including float schema-version rejection and secret-bearing unknown-command/option redaction; smoke commands for help, version, and example-config validation passed. Subprocess checks found no sentinels in stdout or stderr. Validation left the repository file inventory unchanged. No installation, network calls, database or research artifacts were created. FRA-004 is verified and founder-accepted; Git commit status is tracked separately. FRA-005 and later capabilities remain planned and unauthorised.
+
+## FRA-004 founder acceptance record
+
+2026-10-05: the founder accepted FRA-004, including the verified corrections. This acceptance is distinct from the implemented CLI/configuration validator and its recorded verification, and from the separately authorised Git commit. No later runtime work is approved by this acceptance; FRA-005 through FRA-023 remain planned and unauthorised.

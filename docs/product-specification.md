@@ -4,7 +4,7 @@
 
 FintechResearchAgents is the agent platform being planned: a Python system that researches fintech opportunities in Nigeria, compares viability, supports real customer validation, and helps carry a selected opportunity through planning, design, implementation, testing, pilot, and launch.
 
-The eventual fintech product is a separate, unselected outcome. Its customers, proposition, business model, licences, features and architecture are unknown. Platform implementation does not authorise product implementation or financial operations. Current delivery is documentation only (FRA-001 through FRA-003); every runtime capability below is planned. The founder accepted corrected FRA-001 and FRA-002's recorded inputs and deferrals on 2026-10-01. The corrected FRA-003 documentation design is implemented and founder-accepted on 2026-10-04; see the [architecture design](architecture.md). Acceptance, documentation checks and Git commit status are separate.
+The eventual fintech product is a separate, unselected outcome. Its customers, proposition, business model, licences, features and architecture are unknown. Platform implementation does not authorise product implementation or financial operations. FRA-001 through FRA-003 are documentation deliverables; FRA-004 implements only a local CLI configuration validator. Every other runtime capability below is planned. The founder accepted corrected FRA-001 and FRA-002's recorded inputs and deferrals on 2026-10-01. The corrected FRA-003 documentation design is implemented and founder-accepted on 2026-10-04; see the [architecture design](architecture.md). Acceptance, documentation checks and Git commit status are separate.
 
 ## Technical direction
 
